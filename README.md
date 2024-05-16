@@ -25,3 +25,62 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Notes
+
+## Entry points
+
+1. index.html is the entry point
+2. <app-root></app-root> (Bootstrapping happens here)
+
+```
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { SquareComponent } from './square/square.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, SquareComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+})
+export class AppComponent {
+  title = 'myapp';
+}
+```
+
+3. Keep note of imports dependency array
+
+## Component structure
+
+template html and style can be segregated by keeping it in the @Component Decorator.
+This is a standalone component. (new feature)
+
+#### square.components.html
+
+```
+<p>{{ randomNumber }}</p>
+
+```
+
+#### square.components.ts
+
+```
+@Component({
+  selector: 'app-square',
+  standalone: true,
+  imports: [],
+  templateUrl: './square.component.html',
+  styleUrl: './square.component.scss',
+})
+export class SquareComponent {
+  randomNumber = Math.random();
+
+  constructor() {
+    setInterval(() => (this.randomNumber = Math.random()), 500);
+  }
+}
+```
+
+### Passing Data From a Parent Component
